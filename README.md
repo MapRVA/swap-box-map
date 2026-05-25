@@ -40,3 +40,8 @@ flutter build apk --release
 2. Paste the issued client ID into `AppConfig._prodOsmClientId` in `lib/config.dart`, replacing `REGISTER_AT_PROD_AND_PASTE_HERE`.
 
 The dev client ID is already wired in for `USE_DEV_OSM_API=true` builds.
+
+## License
+
+Swap Box Map is released under GPLv3 or any later version.
+Please see [LICENSE.md](LICENSE.md) for more information.
