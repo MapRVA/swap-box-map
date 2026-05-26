@@ -123,8 +123,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
             trailing: const Icon(Icons.open_in_new, size: 16),
             onTap: () => Geolocator.openAppSettings(),
           ),
+          const SizedBox(height: 32),
+          Text('About', style: theme.textTheme.titleMedium),
+          const SizedBox(height: 4),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.waving_hand_outlined),
+            title: const Text('Show welcome screen again'),
+            onTap: _showWelcomeAgain,
+          ),
         ],
       ),
     );
+  }
+
+  Future<void> _showWelcomeAgain() async {
+    final navigator = Navigator.of(context);
+    await widget.settingsService.resetWelcomeSeen();
+    if (!mounted) return;
+    // The root AnimatedBuilder in main.dart re-renders to WelcomeScreen as
+    // soon as welcomeSeen flips, so popping back to the root surfaces it.
+    navigator.popUntil((route) => route.isFirst);
   }
 }

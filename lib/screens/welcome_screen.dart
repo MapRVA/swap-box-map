@@ -1,37 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../services/edit_queue_service.dart';
-import '../services/osm_auth_service.dart';
-import '../services/recent_uploads_service.dart';
 import '../services/settings_service.dart';
-import 'home_screen.dart';
 
+/// First-run greeting. Tapping "Let's Go" flips [SettingsService.welcomeSeen],
+/// which causes the root `AnimatedBuilder` in `main.dart` to swap this screen
+/// out for `HomeScreen`. We deliberately do not navigate here: keeping the
+/// root builder in control lets `SettingsService.resetWelcomeSeen()` surface
+/// the welcome screen again later without route juggling.
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({
-    super.key,
-    required this.authService,
-    required this.settingsService,
-    required this.editQueueService,
-    required this.recentUploadsService,
-  });
+  const WelcomeScreen({super.key, required this.settingsService});
 
-  final OsmAuthService authService;
   final SettingsService settingsService;
-  final EditQueueService editQueueService;
-  final RecentUploadsService recentUploadsService;
-
-  void _enter(BuildContext context) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(
-        builder: (_) => HomeScreen(
-          authService: authService,
-          settingsService: settingsService,
-          editQueueService: editQueueService,
-          recentUploadsService: recentUploadsService,
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +42,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
                 FilledButton.icon(
-                  onPressed: () => _enter(context),
+                  onPressed: settingsService.markWelcomeSeen,
                   icon: const Icon(Icons.arrow_forward),
                   label: const Text("Let's Go"),
                 ),

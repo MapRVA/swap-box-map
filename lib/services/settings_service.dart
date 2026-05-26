@@ -6,10 +6,12 @@ import '../config.dart';
 class SettingsService extends ChangeNotifier {
   static const _overpassUrlKey = 'overpass_url';
   static const _osmApiUrlKey = 'osm_api_url';
+  static const _welcomeSeenKey = 'welcome_seen';
 
   SharedPreferences? _prefs;
   String? _overpassUrlOverride;
   String? _osmApiUrlOverride;
+  bool _welcomeSeen = false;
   bool _initialized = false;
 
   bool get isInitialized => _initialized;
@@ -31,12 +33,33 @@ class SettingsService extends ChangeNotifier {
 
   String? get osmApiUrlOverride => _osmApiUrlOverride;
 
+  /// True once the user has tapped past the welcome screen. Persists across
+  /// launches so the welcome screen only appears on the very first run.
+  bool get welcomeSeen => _welcomeSeen;
+
   Future<void> init() async {
     if (_initialized) return;
     _prefs = await SharedPreferences.getInstance();
     _overpassUrlOverride = _prefs!.getString(_overpassUrlKey);
     _osmApiUrlOverride = _prefs!.getString(_osmApiUrlKey);
+    _welcomeSeen = _prefs!.getBool(_welcomeSeenKey) ?? false;
     _initialized = true;
+    notifyListeners();
+  }
+
+  Future<void> markWelcomeSeen() async {
+    final prefs = _prefs;
+    if (prefs == null || _welcomeSeen) return;
+    await prefs.setBool(_welcomeSeenKey, true);
+    _welcomeSeen = true;
+    notifyListeners();
+  }
+
+  Future<void> resetWelcomeSeen() async {
+    final prefs = _prefs;
+    if (prefs == null || !_welcomeSeen) return;
+    await prefs.remove(_welcomeSeenKey);
+    _welcomeSeen = false;
     notifyListeners();
   }
 

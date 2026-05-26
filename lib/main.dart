@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'screens/home_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'services/edit_queue_service.dart';
 import 'services/osm_auth_service.dart';
@@ -76,7 +77,10 @@ class _SwapBoxMapAppState extends State<SwapBoxMapApp> {
               body: Center(child: CircularProgressIndicator()),
             );
           }
-          return WelcomeScreen(
+          if (!widget.settingsService.welcomeSeen) {
+            return WelcomeScreen(settingsService: widget.settingsService);
+          }
+          return HomeScreen(
             authService: widget.authService,
             settingsService: widget.settingsService,
             editQueueService: widget.editQueueService,
