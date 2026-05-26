@@ -79,6 +79,8 @@ class Amenity {
         if (tags['shoes'] == 'only') return 'Shoe Exchange Box';
         if (tags['art'] == 'only') return 'Art Exchange Box';
         if (tags['puzzles'] == 'only') return 'Puzzle Exchange Box';
+        if (tags['toys'] == 'only') return 'Toy Exchange Box';
+        if (tags['seeds'] == 'only') return 'Seed Exchange Box';
         if (tags['vending'] == 'pet_food') return 'Pet Food Sharing';
         return 'Give Box';
     }

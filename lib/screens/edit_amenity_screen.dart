@@ -218,6 +218,10 @@ class _EditAmenityScreenState extends State<EditAmenityScreen> {
       _giveBoxKind = 'art';
     } else if (_baselineTags['puzzles'] == 'only') {
       _giveBoxKind = 'puzzles';
+    } else if (_baselineTags['toys'] == 'only') {
+      _giveBoxKind = 'toys';
+    } else if (_baselineTags['seeds'] == 'only') {
+      _giveBoxKind = 'seeds';
     } else if (_baselineTags['vending'] == 'pet_food') {
       _giveBoxKind = 'pet_food';
     } else {
@@ -292,7 +296,7 @@ class _EditAmenityScreenState extends State<EditAmenityScreen> {
           tags.remove('fridge');
         }
       case AmenityType.giveBox:
-        for (final k in ['clothes', 'shoes', 'art', 'puzzles']) {
+        for (final k in ['clothes', 'shoes', 'art', 'puzzles', 'toys', 'seeds']) {
           tags.remove(k);
         }
         // Only clear `vending` if it's our marker — preserve other values
@@ -674,6 +678,8 @@ class _EditAmenityScreenState extends State<EditAmenityScreen> {
         DropdownMenuItem(value: 'shoes', child: Text('Shoes only')),
         DropdownMenuItem(value: 'art', child: Text('Art only')),
         DropdownMenuItem(value: 'puzzles', child: Text('Puzzles only')),
+        DropdownMenuItem(value: 'toys', child: Text('Toys only')),
+        DropdownMenuItem(value: 'seeds', child: Text('Seeds only')),
         DropdownMenuItem(value: 'pet_food', child: Text('Pet food only')),
       ],
       onChanged: (v) {
